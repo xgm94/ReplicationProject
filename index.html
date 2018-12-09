@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RRMM Project beta</title>
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/5.5.6/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/5.5.6/firebase-auth.js"></script>
+  <script defer src="/__/firebase/5.5.6/firebase-database.js"></script>
+  <script defer src="/__/firebase/5.5.6/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/5.5.6/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+
+</head>
+
+<body>
+  <div ng-controller="TodoListController as controller" class="container" id="message">
+    <div class="row"></div>
+    <div class="row" ng-hide="!validCode  || experimentEnded">
+      <div class="col s1 "></div>
+      <div class="col s9 ">
+        <div class="card">
+          <div class="card-content white-text" style="min-height:400px; text-align:center">
+            <span class="card-title">Research Methodologies</span>
+            <span class="card-title">{{currentExperiment}}</span>
+            <h2 id="number" ng-hide="!iterationRunning" style="color:black">{{number}}</h2>
+            <div class="cross" ng-hide="iterationRunning || !canShowCross" >
+              <div class="cross-vertical">
+                <div class="cross-horizontal">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action">
+            <h4>View the string and watch for the targets : S and T. One or the other or both can be presented.</h4>
+            <div class="row">
+              <div class="col s12 m4 l2"></div>
+              <div class="col s12 m4 l2"></div>
+              <div class="col s12 m4 l2"></div>
+            </div>
+            <div class="">
+              <div class="row ">
+                <div class="col s4 ">
+                  <a class="waves-effect waves-light btn" ng-disabled="iterationRunning || canAnswer" ng-click="controller.initializeTicking()">START</a>
+                </div>
+                <div class="col s2 ">
+                  <h5>{{answer}}</h5>
+                </div>
+                <div class="col s6 ">
+                  <div>
+                    <a class="waves-effect waves-light btn" ng-disabled="answer.length == 2 || !canAnswer" ng-click="controller.answerS()">S/s</a>
+                    <a class="waves-effect waves-light btn" ng-disabled="answer.length == 2 || !canAnswer" ng-click="controller.answerT()">T/t</a>
+                    <button class="waves-effect waves-light btn" ng-disabled="answer.length == 0" ng-click="controller.erase()">DEL</button>
+                    <button class="waves-effect waves-light btn" ng-disabled="answer.length == 0" ng-click="controller.done()">Done</button>
+                    <span style="margin-left:20px;">
+                      {{currentExperiment +1}}/{{nExperiments}}
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s1"></div>
+    </div>
+
+    <div class="row card  " style="vertical-align:middle; padding-top:100px;" ng-hide="validCode">
+      <div class="col s1 "></div>
+      <div class="col s4 " style="min-height:200px; text-align:right; ">
+        <h5>Enter code here</h5>
+      </div>
+      <div class="col s3 " style="min-height:200px; text-align:center; ">
+        <input ng-model="typeOfTest" placeholder="insert code" />
+      </div>
+      <div class="col s1 " style="min-height:200px; text-align:center; ">
+        <button class="waves-effect waves-light btn" ng-disabled="!typeOfTest " ng-click="controller.submitCode()">Submit</button>
+      </div>
+      <div class="col s1 "></div>
+    </div>
+
+    <div class="row card  " style="vertical-align:middle" ng-hide="!experimentEnded">
+      <div class="col s3 "></div>
+      <div class="col s6 " style="min-height:200px; text-align:center; ">
+        <div class="row">
+          <h5>Thank you for your colaboration!</h5>
+        </div>
+        <div class="row" style="border-top: 1px solid gray">
+          <h5>Gracias por su participación!</h5>
+        </div>
+      </div>
+      <div class="col s3 "></div>
+    </div>
+    <div class="row">
+      <div class="col s3 "></div>
+      <div class="col s6 ">
+      </div>
+      <div class="col s3 "></div>
+    </div>
+  </div>
+
+
+  <script>
+
+  </script>
+</body>
+
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script src="app.js"></script>
+<style>
+  .cross{
+    margin-left:50%;
+  }
+  .cross-vertical {
+    height:100px;
+    position: absolute;
+
+    border-left: 2px solid red;
+
+  }
+  .cross-horizontal{
+    width: 100px;
+    border-top: 2px solid red;
+    top: 50px;
+    position: absolute;
+    left: -50px;
+  }
+</style>
